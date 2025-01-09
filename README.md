@@ -1,1 +1,1 @@
-# Installed-Blocking-Extension-Checker
+this checks whether a blocking extension is installed
