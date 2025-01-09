@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Installed Blocking Extension Checker</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #e8eaed;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      z-index: 0;
+      font-size: 17px;
+      font-weight: 500;
+    }
+   h1 { 
+      display: block;
+      font-size: 2em;
+      margin-top: 0.67em;
+      margin-bottom: 0.67em;
+      margin-left: 0;
+      margin-right: 0;
+      font-weight: bold;
+      margin-top: -5px;
+      margin-bottom: -5px
+    }
+    .containerjjj {
+      width: 800px;
+      margin: auto;
+      padding: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .boxjjj {
+      padding: 20px;
+      background: #252528;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      border-radius: 8px;
+      border: 1px solid #5f6368;
+    }
+
+    .boxjjj h2 {
+      text-align: left;
+      margin-bottom: 20px;
+      font-size: 18px;
+      color: #e8eaed;
+      margin-top: 0px;
+    }
+
+    .gridjjj {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 20px;
+    }
+
+    .grid-itemjjj {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      border: none;
+      border-radius: 8px;
+      background: #3c4043;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .grid-itemjjj.installedjjj {
+      background: #3c4043;
+      border: 3px solid #66ffa1;
+    }
+
+    .grid-itemjjj.not-installedjjj {
+      background: #5a2a2e;
+      border: 3px solid #ff6161;
+    }
+
+    .grid-itemjjj span {
+      font-weight: bold;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="containerjjj">
+    <div class="boxjjj"><h1>dinguschans's Installed Blocking Extension Checker</h1></div></div>
+  <div class="containerjjj">
+    <div class="boxjjj">
+      <h2>Installed Extensions:</h2>
+      <div class="gridjjj" id="installedExtensionsjjj"></div>
+    </div>
+    <div class="boxjjj">
+      <h2>Not Installed Extensions:</h2>
+      <div class="gridjjj" id="notInstalledExtensionsjjj"></div>
+    </div>
+  </div>
+
+  <script>
+    async function checkExtensionURLjjj(url) {
+      try {
+        const response = await fetch(url);
+        return response.ok;
+      } catch (error) {
+        return false;
+      }
+    }
+
+    async function populateExtensionGridjjj() {
+      const installedGridjjj = document.getElementById("installedExtensionsjjj");
+      const notInstalledGridjjj = document.getElementById("notInstalledExtensionsjjj");
+      const extensionsjjj = {
+        "Securly": "chrome-extension://joflmkccibkooplaeoinecjbmdebglab/fonts/Metropolis.css",
+        "Securly (old)": "chrome-extension://iheobagjkfklnlikgihanlhcddjoihkg/fonts/Metropolis.css",
+        "GoGuardian": "chrome-extension://haldlgldplgnggkjaafhelgiaglafanh/youtube_injection.js",
+        "LANSchool": "chrome-extension://baleiojnjpgeojohhhfbichcodgljmnj/blocked.html",
+        "Linewize": "chrome-extension://ddfbkhpmcdbciejenfcolaaiebnjcbfc/background/assets/pages/default-blocked.html",
+        "Blocksi": "chrome-extension://ghlpmldmjjhmdgmneoaibbegkjjbonbk/pages/blockPage.html",
+        "FortiGuard": "chrome-extension://igbgpehnbmhgdgjbhkkpedommgmfbeao/youtube_injection.js",
+        "Cisco Umbrella": "chrome-extension://jcdhmojfecjfmbdpchihbeilohgnbdci/blocked.html",
+        "ContentKeeper": "chrome-extension://jdogphakondfdmcanpapfahkdomaicfa/img/ckauth19x.png",
+        "CK-Authenticator G3": "chrome-extension://odoanpnonilogofggaohhkdkdgbhdljp/img/ckauth19x.png",
+        "Securly Classroom": "chrome-extension://jfbecfmiegcjddenjhlbhlikcbfmnafd/notfound.html",
+        "Hapara": "chrome-extension://kbohafcopfpigkjdimdcdgenlhkmhbnc/blocked.html",
+        "Hapara (new ID)": "chrome-extension://aceopacgaepdcelohobicpffbbejnfac/blocked.html",
+        "iboss": "chrome-extension://kmffehbidlalibfeklaefnckpidbodff/restricted.html",
+        "Lightspeed Digital Insight Agent": "chrome-extension://njdniclgegijdcdliklgieicanpmcngj/js/wasm_exec.js",
+        "Lightspeed Filter Agent": "chrome-extension://adkcpkpghahmbopkjchobieckeoaoeem/icon-128.png",
+        "Lightspeed Classroom": "chrome-extension://kkbmdgjggcdajckdlbngdjonpchpaiea/assets/icon-classroom-128.png",
+        "InterCLASS Filtering Service": "chrome-extension://jbddgjglgkkneonnineaohdhabjbgopi/pages/message-page.html",
+        "InterSafe GatewayConnection Agent": "chrome-extension://ecjoghccnjlodjlmkgmnbnkdcbnjgden/resources/options.js",
+        "LoiLo Web Filters": "chrome-extension://pabjlbjcgldndnpjnokjakbdofjgnfia/image/allow_icon/shield_green_128x128.png",
+        "Gopher Buddy": "chrome-extension://cgbbbjmgdpnifijconhamggjehlamcif/images/gopher-buddy_128x128_color.png",
+        "LanSchool Web Helper": "chrome-extension://honjcnefekfnompampcpmcdadibmjhlk/blocked.html",
+        "IMTLazarus": "chrome-extension://cgigopjakkeclhggchgnhmpmhghcbnaf/models/model.json",
+        "Impero Backdrop": "chrome-extension://jjpmjccpemllnmgiaojaocgnakpmfgjg/licenses.html",
+        "Mobile Guardian": "chrome-extension://fgmafhdohjkdhfaacgbgclmfgkgokgmb/block.html",
+        "NetSupport School Student": "chrome-extension://gcjpefhffmcgplgklffgbebganmhffje/_locales/lt/messages.json",
+        "Lightspeed Alert Agent": "chrome-extension://gcjpefhffmcgplgklffgbebganmhffje/_locales/lt/main.js",
+        "Lightspeed Alert Agent 2": "chrome-extension://gcjpefhffmcgplgklffgbebganmhffje/_locales/lt/in_page.js",
+        "Lockdown Browser": "chrome-extension://fogjeanjfbiombghnmkmmophfeccjdki/manifest.json",
+        "Linewize Filter": "chrome-extension://ifinpabiejbjobcphhaomiifjibpkjlf/background/assets/pages/default-blocked.html",
+        "Borderless Classroom Student": "chrome-extension://kdpgkligilplaanoablcpjahjjeghcl/pages/blockPage.html"
+      };
+
+      for (const [name, url] of Object.entries(extensionsjjj)) {
+        const gridItemjjj = document.createElement("div");
+        gridItemjjj.classList.add("grid-itemjjj");
+
+        const statusjjj = await checkExtensionURLjjj(url) ? "Installed" : "Not Installed";
+        const statusSpanjjj = document.createElement("span");
+        statusSpanjjj.textContent = statusjjj;
+
+        gridItemjjj.textContent = name;
+        gridItemjjj.appendChild(statusSpanjjj);
+
+        gridItemjjj.classList.add(statusjjj.toLowerCase().replace(" ", "-") + "jjj");
+        if (statusjjj === "Installed") {
+          installedGridjjj.appendChild(gridItemjjj);
+        } else {
+          notInstalledGridjjj.appendChild(gridItemjjj);
+        }
+      }
+    }
+
+    window.onload = populateExtensionGridjjj;
+  </script>
+</body>
+
+</html>
